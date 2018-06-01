@@ -1,0 +1,104 @@
+
+
+
+weeks = 18
+
+exotics = 12
+legendaries = 46
+ornaments = 17
+blue = 6
+
+
+
+number_of_items = exotics + legendaries + ornaments + blue
+
+from random import choice
+from random import randint
+
+
+#def matrix(items):
+	#for category in loot_pool_category:
+
+
+def print_loot(printing):
+	for row in printing:
+		print row, " ::",
+		for item in printing[row]:
+			print  item, "",
+		print ""
+
+def initialize():
+	global exotics, legendaries, ornaments, blue
+	dec_e = 0
+	dec_l = 0
+	dec_o = 0
+	dec_b = 0
+
+	for i in range(number_of_items):
+		cat = choice(Categories)
+		rarity = choice(Rarities)
+		hold = item(i, cat, rarity)
+		loot_pool_category[cat].append(hold)
+		loot_pool_rarity[rarity].append(hold)
+
+		if(rarity == 'Exotic'):
+			dec_e += 1
+			if(dec_e >= exotics):
+				Rarities.remove('Exotic')
+			
+		elif(rarity == 'Legendary'):
+			dec_l += 1
+			if(dec_l >= legendaries):
+				Rarities.remove('Legendary')
+
+
+		elif(rarity == 'Rare'):
+			dec_b += 1
+			if(dec_b >= blue):
+				Rarities.remove('Rare')
+
+
+		elif(rarity == 'Ornament'):
+			dec_o += 1
+			if(dec_o >= ornaments):
+				Rarities.remove('Ornament')
+
+
+
+class item (object):
+	def __init__(self, number, cat, rarity):
+		self.number = number
+		self.cat = cat
+		self.rarity = rarity
+
+	def __repr__(self):
+		return "%s" % (self.number)
+
+
+
+Categories = ['Ships', 'Sparrows', 'Armor', 'Ornaments', 'Emotes']
+Rarities = ['Exotic', 'Legendary', 'Rare', 'Ornament']
+
+
+loot_pool_category = {
+	'Ships' : [],
+	'Sparrows' : [],
+	'Armor' : [],
+	'Ornaments' : [],
+	'Emotes' : []
+}
+
+
+loot_pool_rarity = {
+	'Exotic' : [],
+	'Legendary' : [],
+	'Rare' : [],
+	'Ornament' : []
+}
+
+initialize()
+
+print_loot(loot_pool_category)
+print
+print_loot(loot_pool_rarity)
+
